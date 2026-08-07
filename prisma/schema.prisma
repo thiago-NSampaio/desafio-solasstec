@@ -1,108 +1,122 @@
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
+  schemas  = ["desafio"]
 }
 
 datasource db {
   provider = "postgresql"
+  schemas  = ["desafio"]
 }
 
 model TypePriority {
-  id            Int  @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   description   String
   priorityLevel Int      @map("priority_level")
-  active        Boolean
+  active        Boolean? @default(true)
   createdAt     DateTime @default(now()) @map("created_at")
 
-  visitor       Visitor[]
+  visitors Visitor[]
 
   @@map("types_prioritys")
+  @@schema("desafio")
 }
 
 model Visitor {
-  id             Int       @id @default(autoincrement())
-  name           String
-  document       String     @unique
-  dateOfBirth    DateTime     @map("date_of_birth")
-  photo          String
-  active         Boolean
-  createdAt      DateTime     @default(now()) @map("created_at")
-  priorityLevelId Int
+  id              Int      @id @default(autoincrement())
+  name            String
+  document        String   @unique
+  dateOfBirth     DateTime @map("date_of_birth") @db.Date
+  photo           String?
+  active          Boolean? @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+  priorityLevelId Int?
 
-  typePriority   TypePriority @relation(fields: [priorityLevelId], references: [id])
-  scheduling Scheduling[]
-  entry Entry[]
+  typePriority TypePriority? @relation(fields: [priorityLevelId], references: [id])
+  schedulings  Scheduling[]
+  entrys       Entry[]
 
+  @@index([document])
   @@map("visitors")
+  @@schema("desafio")
 }
 
 model Room {
-  id Int @id @default(autoincrement())
-  name String
-  availability Json
-  capacity Int
-  capacity_variation Int
-  active Boolean
-  createdAt DateTime @default(now()) @map("created_at")
+  id                Int      @id @default(autoincrement())
+  name              String
+  availability      Json
+  capacity          Int
+  capacityVariation Int?
+  active            Boolean? @default(true)
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamp(6)
 
-  scheduling Scheduling[]
-  entry Entry[]
-  responsibleRoom ResponsibleRoom[]
+  schedulings       Scheduling[]
+  entrys            Entry[]
+  responsiblesRooms ResponsibleRoom[]
 
   @@map("rooms")
+  @@schema("desafio")
 }
 
 model Scheduling {
-  id Int @id @default(autoincrement())
-  visitorId Int
-  roomId Int
-  dateScheduled Int
-  status Boolean
-  createdAt DateTime @default(now()) @map("created_at")
+  id            Int      @id @default(autoincrement())
+  visitorId     Int
+  roomId        Int?
+  dateScheduled DateTime @unique
+  status        Int?     @default(1)
+  createdAt     DateTime @default(now()) @map("created_at")
 
-  visitor Visitor @relation(fields: [visitorId],references: [id])
-  room Room @relation(fields: [roomId],references: [id])
+  visitor Visitor @relation(fields: [visitorId], references: [id], onDelete: Cascade)
+  room    Room?   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  entrys  Entry[]
 
-  entry Entry[]
-
-  @@unique([dateScheduled])
+  @@index([dateScheduled])
   @@map("schedulings")
+  @@schema("desafio")
 }
 
 model Entry {
-  id Int @id @default(autoincrement())
-  visitorId Int
-  roomId Int
-  schedulingId Int
+  id           Int       @id @default(autoincrement())
+  visitorId    Int
+  roomId       Int?
+  schedulingId Int?
+  enteredAt    DateTime?
+  exitedAt     DateTime?
+  active       Boolean?  @default(true)
+  createdAt    DateTime? @default(now()) @map("created_at")
 
-  visitor Visitor @relation(fields: [visitorId],references: [id])
-  room Room @relation(fields: [roomId],references: [id])
-  scheduling Scheduling @relation(fields: [schedulingId],references: [id])
+  visitor    Visitor     @relation(fields: [visitorId], references: [id])
+  room       Room?       @relation(fields: [roomId], references: [id])
+  scheduling Scheduling? @relation(fields: [schedulingId], references: [id])
 
   @@map("entrys")
+  @@schema("desafio")
 }
 
 model ResponsibleRoom {
-  id Int @id @default(autoincrement())
-  name String
-  roomId Int
-  validated DateTime
-  validatedAt DateTime @map("validated_at")
-  active Boolean
-  createdAt DateTime @default(now()) @map("created_at")
+  id        Int       @id @default(autoincrement())
+  name      String
+  roomId    Int?
+  validFrom DateTime  @map("valid_from") @db.Date
+  validTo   DateTime? @map("valid_to") @db.Date
+  active    Boolean?  @default(true)
+  createdAt DateTime  @default(now()) @map("created_at")
 
-  room Room @relation(fields: [roomId],references: [id])
+  room Room? @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
   @@map("responsibles_rooms")
+  @@schema("desafio")
 }
 
-model Holiday{
-  id Int @id @default(autoincrement())
-  date DateTime @unique
+model Holiday {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @unique @db.Date
   description String
-  type Int
-  active Boolean
-  createdAt DateTime @default(now()) @map("created_at")
+  type        Int?
+  active      Boolean? @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
 
+  @@index([date])
   @@map("holidays")
+  @@schema("desafio")
 }
