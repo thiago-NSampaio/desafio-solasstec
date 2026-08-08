@@ -3,9 +3,9 @@ import { Scheduling } from '../entities/scheduling';
 import { SchedulingRepository } from '../repositories/scheduling-repository';
 
 interface CreateSchedulingRequest {
-  visitorId: number;
+  visitorId: string;
   dateScheduled: Date;
-  roomId: number | null;
+  roomId: string | null;
 }
 
 interface CreateSchedulingResponse {
@@ -23,8 +23,9 @@ export class CreateScheduling {
 
     const scheduling = new Scheduling(visitorId, dateScheduled, roomId);
 
-    await this.schedulingRepository.create(scheduling);
+    const createdScheduling =
+      await this.schedulingRepository.create(scheduling);
 
-    return { scheduling };
+    return { scheduling: createdScheduling };
   }
 }

@@ -6,7 +6,7 @@ interface CreateRoomRequest {
   name: string;
   availability: Availability[];
   capacity: number;
-  capacityVariation: number | null;
+  capacityVariation?: number | null;
 }
 
 interface CreateRoomResponse {

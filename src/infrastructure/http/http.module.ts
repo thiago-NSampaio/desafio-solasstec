@@ -4,12 +4,13 @@ import { VisitorController } from './controllers/visitor.controller';
 import { CreateRoom } from '../../app/use-cases/create-room';
 import { RoomController } from './controllers/room.controller';
 import { CreateScheduling } from '../../app/use-cases/create-scheduling';
+import { GetScheduling } from '../../app/use-cases/get-scheduling';
 import { SchedulingController } from './controllers/scheduling.controller';
 import { DatabaseModule } from '../database/prisma/database.module';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [VisitorController, RoomController, SchedulingController],
-  providers: [CreateVisitor, CreateRoom, CreateScheduling],
+  providers: [CreateVisitor, CreateRoom, CreateScheduling, GetScheduling],
 })
 export class HttpModule {}

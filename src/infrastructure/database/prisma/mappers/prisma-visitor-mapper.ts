@@ -4,6 +4,7 @@ import { Visitor } from '../../../../app/entities/visitor';
 export class PrismaVisitorMapper {
   static toPrisma(visitor: Visitor) {
     return {
+      id: visitor.id,
       name: visitor.name,
       document: visitor.document,
       dateOfBirth: visitor.dateOfBirth,

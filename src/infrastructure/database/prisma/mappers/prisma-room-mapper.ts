@@ -4,6 +4,7 @@ import { Availability, Room } from '../../../../app/entities/room';
 export class PrismaRoomMapper {
   static toPrisma(room: Room) {
     return {
+      id: room.id,
       name: room.name,
       availability: room.availability as unknown as Prisma.InputJsonValue,
       capacity: room.capacity,

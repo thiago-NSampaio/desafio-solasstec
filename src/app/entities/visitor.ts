@@ -1,4 +1,7 @@
+import { randomUUID } from 'node:crypto';
+
 export class Visitor {
+  private readonly _id: string;
   private readonly _name: string;
   private readonly _document: string;
   private readonly _dateOfBirth: Date;
@@ -12,11 +15,16 @@ export class Visitor {
     photo: string | null,
     priorityLevelId: number | null,
   ) {
+    this._id = randomUUID();
     this._name = name;
     this._document = document;
     this._dateOfBirth = dateOfBirth;
     this._photo = photo;
     this._priorityLevelId = priorityLevelId;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   get name(): string {

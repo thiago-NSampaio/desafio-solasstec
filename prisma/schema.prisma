@@ -22,7 +22,7 @@ model TypePriority {
 }
 
 model Visitor {
-  id              Int      @id @default(autoincrement())
+  id              String   @id @db.Uuid
   name            String
   document        String   @unique
   dateOfBirth     DateTime @map("date_of_birth") @db.Date
@@ -41,7 +41,7 @@ model Visitor {
 }
 
 model Room {
-  id                Int      @id @default(autoincrement())
+  id                String   @id @db.Uuid
   name              String
   availability      Json
   capacity          Int
@@ -58,9 +58,9 @@ model Room {
 }
 
 model Scheduling {
-  id            Int      @id @default(autoincrement())
-  visitorId     Int
-  roomId        Int?
+  id            String   @id @db.Uuid
+  visitorId     String   @db.Uuid
+  roomId        String?  @db.Uuid
   dateScheduled DateTime @unique
   status        Int?     @default(1)
   createdAt     DateTime @default(now()) @map("created_at")
@@ -76,9 +76,9 @@ model Scheduling {
 
 model Entry {
   id           Int       @id @default(autoincrement())
-  visitorId    Int
-  roomId       Int?
-  schedulingId Int?
+  visitorId    String    @db.Uuid
+  roomId       String?   @db.Uuid
+  schedulingId String?   @db.Uuid
   enteredAt    DateTime? @map("entered_at")
   exitedAt     DateTime? @map("exited_at")
   active       Boolean?  @default(true)
@@ -95,7 +95,7 @@ model Entry {
 model ResponsibleRoom {
   id        Int       @id @default(autoincrement())
   name      String
-  roomId    Int?
+  roomId    String?   @db.Uuid
   validFrom DateTime  @map("valid_from") @db.Date
   validTo   DateTime? @map("valid_to") @db.Date
   active    Boolean?  @default(true)

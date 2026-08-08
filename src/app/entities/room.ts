@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+
 export interface Availability {
   dayOfWeek: string;
   openTime: string;
@@ -5,6 +7,7 @@ export interface Availability {
 }
 
 export class Room {
+  private readonly _id: string;
   private readonly _name: string;
   private readonly _availability: Availability[];
   private readonly _capacity: number;
@@ -16,10 +19,15 @@ export class Room {
     capacity: number,
     capacityVariation?: number | null,
   ) {
+    this._id = randomUUID();
     this._name = name;
     this._availability = availability;
     this._capacity = capacity;
     this._capacityVariation = capacityVariation ?? null;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   get name(): string {
