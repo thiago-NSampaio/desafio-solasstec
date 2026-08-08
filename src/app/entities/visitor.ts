@@ -6,16 +6,17 @@ export class Visitor {
   private readonly _document: string;
   private readonly _dateOfBirth: Date;
   private readonly _photo: string | null;
-  private readonly _priorityLevelId: number | null;
+  private readonly _priorityLevelId: string | null;
 
   constructor(
     name: string,
     document: string,
     dateOfBirth: Date,
     photo: string | null,
-    priorityLevelId: number | null,
+    priorityLevelId: string | null,
+    id?: string,
   ) {
-    this._id = randomUUID();
+    this._id = id ?? randomUUID();
     this._name = name;
     this._document = document;
     this._dateOfBirth = dateOfBirth;
@@ -43,7 +44,7 @@ export class Visitor {
     return this._photo;
   }
 
-  get priorityLevelId(): number | null {
+  get priorityLevelId(): string | null {
     return this._priorityLevelId;
   }
 }

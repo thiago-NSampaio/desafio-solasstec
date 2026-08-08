@@ -1,6 +1,5 @@
 import {
   IsDateString,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -28,6 +27,6 @@ export class CreateVisitorBody {
   photo?: string;
 
   @IsOptional()
-  @IsInt({ message: 'O nível de prioridade deve ser um número inteiro.' })
-  priorityLevelId?: number;
+  @IsString({ message: 'O nível de prioridade deve ser um texto.' })
+  priorityLevelId?: string;
 }

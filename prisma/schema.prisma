@@ -9,7 +9,7 @@ datasource db {
 }
 
 model TypePriority {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @db.Uuid
   description   String
   priorityLevel Int      @map("priority_level")
   active        Boolean? @default(true)
@@ -29,7 +29,7 @@ model Visitor {
   photo           String?
   active          Boolean? @default(true)
   createdAt       DateTime @default(now()) @map("created_at")
-  priorityLevelId Int?
+  priorityLevelId String?  @db.Uuid
 
   typePriority TypePriority? @relation(fields: [priorityLevelId], references: [id])
   schedulings  Scheduling[]
@@ -75,7 +75,7 @@ model Scheduling {
 }
 
 model Entry {
-  id           Int       @id @default(autoincrement())
+  id           String    @id @db.Uuid
   visitorId    String    @db.Uuid
   roomId       String?   @db.Uuid
   schedulingId String?   @db.Uuid
@@ -93,7 +93,7 @@ model Entry {
 }
 
 model ResponsibleRoom {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @db.Uuid
   name      String
   roomId    String?   @db.Uuid
   validFrom DateTime  @map("valid_from") @db.Date
@@ -108,7 +108,7 @@ model ResponsibleRoom {
 }
 
 model Holiday {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @db.Uuid
   date        DateTime @unique @db.Date
   description String
   type        Int?

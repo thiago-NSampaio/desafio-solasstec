@@ -7,7 +7,7 @@ interface CreateVisitorRequest {
   document: string;
   dateOfBirth: Date;
   photo: string;
-  priorityLevelId: number | null;
+  priorityLevelId: string | null;
 }
 
 interface CreateVisitorResponse {

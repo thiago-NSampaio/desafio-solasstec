@@ -6,6 +6,8 @@ import { RoomRepository } from '../../../app/repositories/room-repository';
 import { PrismaRoomRepository } from './repositories/prisma-room-repository';
 import { SchedulingRepository } from '../../../app/repositories/scheduling-repository';
 import { PrismaSchedulingRepository } from './repositories/prisma-scheduling-repository';
+import { EntryRepository } from '../../../app/repositories/entry-repository';
+import { PrismaEntryRepository } from './repositories/prisma-entry-repository';
 
 @Module({
   providers: [
@@ -22,7 +24,16 @@ import { PrismaSchedulingRepository } from './repositories/prisma-scheduling-rep
       provide: SchedulingRepository,
       useClass: PrismaSchedulingRepository,
     },
+    {
+      provide: EntryRepository,
+      useClass: PrismaEntryRepository,
+    },
   ],
-  exports: [VisitorRepository, RoomRepository, SchedulingRepository],
+  exports: [
+    VisitorRepository,
+    RoomRepository,
+    SchedulingRepository,
+    EntryRepository,
+  ],
 })
 export class DatabaseModule {}
