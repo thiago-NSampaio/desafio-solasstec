@@ -19,17 +19,12 @@ export class CreateVisitorBody {
   document!: string;
 
   @IsNotEmpty({ message: 'A data de nascimento é obrigatória.' })
-  @IsDateString(
-    {},
-    { message: 'A data deve estar no formato ISO (YYYY-MM-DD)' },
-  )
+  @IsDateString()
   dateOfBirth!: Date;
 
   @IsOptional()
-  @IsString({ message: 'A foto deve ser uma URL válida.' })
-  @MaxLength(255, {
-    message: ' O link da foto deve ter no máximo 255 caracteres.',
-  })
+  @IsString({ message: 'A foto deve ser uma URL.' })
+  @MaxLength(255)
   photo?: string;
 
   @IsOptional()
