@@ -6,8 +6,8 @@ export class VisitorPresenter {
       name: visitor.name,
       document: visitor.document,
       dateOfBirth: visitor.dateOfBirth,
-      photo: visitor.photo ?? null,
-      priorityLevelId: visitor.priorityLevelId ?? null,
+      photo: visitor.photo,
+      priorityLevelId: visitor.priorityLevelId,
     };
   }
 }
