@@ -1,0 +1,13 @@
+import { Visitor } from '../../../app/entities/visitor';
+
+export class VisitorPresenter {
+  static toHTTP(visitor: Visitor) {
+    return {
+      name: visitor.name,
+      document: visitor.document,
+      dateOfBirth: visitor.dateOfBirth,
+      photo: visitor.photo ?? null,
+      priorityLevelId: visitor.priorityLevelId ?? null,
+    };
+  }
+}

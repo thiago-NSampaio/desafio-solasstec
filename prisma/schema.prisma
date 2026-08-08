@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
   schemas  = ["desafio"]
 }
 
@@ -80,8 +79,8 @@ model Entry {
   visitorId    Int
   roomId       Int?
   schedulingId Int?
-  enteredAt    DateTime?
-  exitedAt     DateTime?
+  enteredAt    DateTime? @map("entered_at")
+  exitedAt     DateTime? @map("exited_at")
   active       Boolean?  @default(true)
   createdAt    DateTime? @default(now()) @map("created_at")
 
