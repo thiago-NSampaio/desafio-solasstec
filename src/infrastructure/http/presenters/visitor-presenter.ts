@@ -9,6 +9,8 @@ export class VisitorPresenter {
       dateOfBirth: visitor.dateOfBirth,
       photo: visitor.photo,
       priorityLevelId: visitor.priorityLevelId,
+      active: visitor.active,
+      createdAt: visitor.createdAt,
     };
   }
 }

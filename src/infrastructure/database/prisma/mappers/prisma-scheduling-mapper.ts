@@ -17,6 +17,8 @@ export class PrismaSchedulingMapper {
       visitorId: scheduling.visitorId,
       roomId: scheduling.roomId || null,
       dateScheduled: scheduling.dateScheduled,
+      active: scheduling.active,
+      createdAt: scheduling.createdAt ?? undefined,
     };
   }
 
@@ -33,6 +35,8 @@ export class PrismaSchedulingMapper {
       raw.visitorId,
       raw.dateScheduled,
       raw.roomId,
+      'active' in raw ? (raw as any).active : true,
+      raw.createdAt,
       visitor,
       room,
       raw.id,

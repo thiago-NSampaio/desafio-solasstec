@@ -7,6 +7,8 @@ export class Visitor {
   private readonly _dateOfBirth: Date;
   private readonly _photo: string | null;
   private readonly _priorityLevelId: string | null;
+  private readonly _active: boolean | null;
+  private readonly _createdAt: Date | null;
 
   constructor(
     name: string,
@@ -14,6 +16,8 @@ export class Visitor {
     dateOfBirth: Date,
     photo: string | null,
     priorityLevelId: string | null,
+    active?: boolean | null,
+    createdAt?: Date | null,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
@@ -22,6 +26,8 @@ export class Visitor {
     this._dateOfBirth = dateOfBirth;
     this._photo = photo;
     this._priorityLevelId = priorityLevelId;
+    this._active = active ?? true;
+    this._createdAt = createdAt ?? new Date();
   }
 
   get id(): string {
@@ -47,4 +53,13 @@ export class Visitor {
   get priorityLevelId(): string | null {
     return this._priorityLevelId;
   }
+
+  get active(): boolean | null {
+    return this._active;
+  }
+
+  get createdAt(): Date | null {
+    return this._createdAt;
+  }
 }
+

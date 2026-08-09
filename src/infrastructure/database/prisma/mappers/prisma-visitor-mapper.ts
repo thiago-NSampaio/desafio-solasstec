@@ -10,6 +10,8 @@ export class PrismaVisitorMapper {
       dateOfBirth: visitor.dateOfBirth,
       photo: visitor.photo,
       priorityLevelId: visitor.priorityLevelId,
+      active: visitor.active,
+      createdAt: visitor.createdAt ?? undefined,
     };
   }
 
@@ -20,6 +22,8 @@ export class PrismaVisitorMapper {
       raw.dateOfBirth,
       raw.photo,
       raw.priorityLevelId,
+      raw.active,
+      raw.createdAt,
       raw.id,
     );
   }

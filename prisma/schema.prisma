@@ -63,6 +63,7 @@ model Scheduling {
   roomId        String?  @db.Uuid
   dateScheduled DateTime @unique
   status        Int?     @default(1)
+  active        Boolean? @default(true)
   createdAt     DateTime @default(now()) @map("created_at")
 
   visitor Visitor @relation(fields: [visitorId], references: [id], onDelete: Cascade)

@@ -9,6 +9,8 @@ export class PrismaRoomMapper {
       availability: room.availability as unknown as Prisma.InputJsonValue,
       capacity: room.capacity,
       capacityVariation: room.capacityVariation,
+      active: room.active,
+      createdAt: room.createdAt ?? undefined,
     };
   }
 
@@ -18,6 +20,9 @@ export class PrismaRoomMapper {
       raw.availability as unknown as Availability[],
       raw.capacity,
       raw.capacityVariation,
+      raw.active,
+      raw.createdAt,
+      raw.id,
     );
   }
 }

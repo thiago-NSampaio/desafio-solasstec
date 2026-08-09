@@ -7,6 +7,8 @@ export class SchedulingPresenter {
       visitorId: scheduling.visitorId,
       roomId: scheduling.roomId,
       dateScheduled: scheduling.dateScheduled,
+      active: scheduling.active,
+      createdAt: scheduling.createdAt,
       visitor: scheduling.visitor
         ? {
             id: scheduling.visitor.id,

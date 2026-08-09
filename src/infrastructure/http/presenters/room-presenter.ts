@@ -8,6 +8,8 @@ export class RoomPresenter {
       availability: room.availability,
       capacity: room.capacity,
       capacityVariation: room.capacityVariation ?? null,
+      active: room.active,
+      createdAt: room.createdAt,
     };
   }
 }

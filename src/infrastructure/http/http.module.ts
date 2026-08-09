@@ -4,6 +4,8 @@ import { GetVisitor } from '../../app/use-cases/get-visitor';
 import { GetVisitors } from '../../app/use-cases/get-visitors';
 import { VisitorController } from './controllers/visitor.controller';
 import { CreateRoom } from '../../app/use-cases/create-room';
+import { GetRoom } from '../../app/use-cases/get-room';
+import { GetRooms } from '../../app/use-cases/get-rooms';
 import { RoomController } from './controllers/room.controller';
 import { CreateScheduling } from '../../app/use-cases/create-scheduling';
 import { GetScheduling } from '../../app/use-cases/get-scheduling';
@@ -26,6 +28,8 @@ import { DatabaseModule } from '../database/prisma/database.module';
     GetVisitor,
     GetVisitors,
     CreateRoom,
+    GetRoom,
+    GetRooms,
     CreateScheduling,
     GetScheduling,
     CreateEntry,

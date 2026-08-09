@@ -7,6 +7,8 @@ export class Scheduling {
   private readonly _visitorId: string;
   private readonly _roomId: string | null;
   private readonly _dateScheduled: Date;
+  private readonly _active: boolean | null;
+  private readonly _createdAt: Date | null;
   private readonly _visitor?: Visitor | null;
   private readonly _room?: Room | null;
 
@@ -14,6 +16,8 @@ export class Scheduling {
     visitorId: string,
     dateScheduled: Date,
     roomId: string | null,
+    active?: boolean | null,
+    createdAt?: Date | null,
     visitor?: Visitor | null,
     room?: Room | null,
     id?: string,
@@ -22,6 +26,8 @@ export class Scheduling {
     this._visitorId = visitorId;
     this._dateScheduled = dateScheduled;
     this._roomId = roomId;
+    this._active = active ?? true;
+    this._createdAt = createdAt ?? new Date();
     this._visitor = visitor;
     this._room = room;
   }
@@ -42,6 +48,14 @@ export class Scheduling {
     return this._dateScheduled;
   }
 
+  get active(): boolean | null {
+    return this._active;
+  }
+
+  get createdAt(): Date | null {
+    return this._createdAt;
+  }
+
   get visitor(): Visitor | null {
     return this._visitor || null;
   }
@@ -50,3 +64,4 @@ export class Scheduling {
     return this._room || null;
   }
 }
+
