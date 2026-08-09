@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CreateVisitor } from '../../app/use-cases/create-visitor';
+import { GetVisitor } from '../../app/use-cases/get-visitor';
+import { GetVisitors } from '../../app/use-cases/get-visitors';
 import { VisitorController } from './controllers/visitor.controller';
 import { CreateRoom } from '../../app/use-cases/create-room';
 import { RoomController } from './controllers/room.controller';
@@ -21,6 +23,8 @@ import { DatabaseModule } from '../database/prisma/database.module';
   ],
   providers: [
     CreateVisitor,
+    GetVisitor,
+    GetVisitors,
     CreateRoom,
     CreateScheduling,
     GetScheduling,

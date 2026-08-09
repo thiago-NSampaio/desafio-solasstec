@@ -20,6 +20,7 @@ export class PrismaVisitorMapper {
       raw.dateOfBirth,
       raw.photo,
       raw.priorityLevelId,
+      raw.id,
     );
   }
 }

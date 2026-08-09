@@ -16,4 +16,22 @@ export class PrismaVisitorRepository implements VisitorRepository {
       data: raw,
     });
   }
+
+  async findById(id: string): Promise<Visitor | null> {
+    const raw = await this.prismaService.visitor.findUnique({
+      where: { id },
+    });
+
+    if (!raw) {
+      return null;
+    }
+
+    return PrismaVisitorMapper.toDomain(raw);
+  }
+
+  async findMany(): Promise<Visitor[]> {
+    const visitors = await this.prismaService.visitor.findMany();
+
+    return visitors.map(PrismaVisitorMapper.toDomain);
+  }
 }
