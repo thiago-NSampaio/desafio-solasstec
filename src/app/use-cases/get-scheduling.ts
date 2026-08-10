@@ -17,8 +17,7 @@ export class GetScheduling {
   async execute(request: GetSchedulingRequest): Promise<GetSchedulingResponse> {
     const { schedulingId } = request;
 
-    const scheduling =
-      await this.schedulingRepository.findByIdWithRelations(schedulingId);
+    const scheduling = await this.schedulingRepository.findById(schedulingId);
 
     if (!scheduling) {
       throw new NotFoundException('Agendamento não encontrado.');
