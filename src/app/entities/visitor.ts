@@ -61,5 +61,18 @@ export class Visitor {
   get createdAt(): Date | null {
     return this._createdAt;
   }
-}
 
+  get age(): number {
+    const today = new Date();
+    const birth = new Date(this._dateOfBirth);
+    const age = today.getFullYear() - birth.getFullYear();
+
+    return age;
+  }
+
+  isPriority(hasDisability?: boolean): boolean {
+    return (
+      this.age >= 60 || Boolean(hasDisability) || Boolean(this._priorityLevelId)
+    );
+  }
+}

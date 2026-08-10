@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common/decorators';
-
 import { PrismaService } from '../prisma.service';
 import { VisitorRepository } from '../../../../app/repositories/visitor-repository';
 import { Visitor } from '../../../../app/entities/visitor';
@@ -9,12 +8,14 @@ import { PrismaVisitorMapper } from '../mappers/prisma-visitor-mapper';
 export class PrismaVisitorRepository implements VisitorRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async create(visitor: Visitor): Promise<void> {
+  async create(visitor: Visitor): Promise<Visitor> {
     const raw = PrismaVisitorMapper.toPrisma(visitor);
 
-    await this.prismaService.visitor.create({
+    const created = await this.prismaService.visitor.create({
       data: raw,
     });
+
+    return PrismaVisitorMapper.toDomain(created);
   }
 
   async findById(id: string): Promise<Visitor | null> {
@@ -29,9 +30,23 @@ export class PrismaVisitorRepository implements VisitorRepository {
     return PrismaVisitorMapper.toDomain(raw);
   }
 
-  async findMany(): Promise<Visitor[]> {
+  async findByDocument(document: string): Promise<Visitor | null> {
+    const cleanDoc = document.replace(/\D/g, '');
     const visitors = await this.prismaService.visitor.findMany();
 
-    return visitors.map(PrismaVisitorMapper.toDomain);
+    const match = visitors.find(
+      (v) => v.document.replace(/\D/g, '') === cleanDoc,
+    );
+
+    if (!match) return null;
+    return PrismaVisitorMapper.toDomain(match);
+  }
+
+  async findMany(): Promise<Visitor[]> {
+    const visitors = await this.prismaService.visitor.findMany({
+      orderBy: { name: 'asc' },
+    });
+
+    return visitors.map((visitor) => PrismaVisitorMapper.toDomain(visitor));
   }
 }

@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDateString,
   IsNotEmpty,
   IsOptional,
@@ -29,4 +30,8 @@ export class CreateVisitorBody {
   @IsOptional()
   @IsString({ message: 'O nível de prioridade deve ser um texto.' })
   priorityLevelId?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  hasDisability?: boolean;
 }

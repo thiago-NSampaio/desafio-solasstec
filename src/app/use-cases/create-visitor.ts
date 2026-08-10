@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common/decorators';
+import { Injectable } from '@nestjs/common';
 import { Visitor } from '../entities/visitor';
 import { VisitorRepository } from '../repositories/visitor-repository';
+import { VisitorAlreadyExistsException } from './exceptions/visitor-already-exists-exception';
 
 interface CreateVisitorRequest {
   name: string;
   document: string;
   dateOfBirth: Date;
-  photo: string;
-  priorityLevelId: string | null;
+  photo?: string;
+  priorityLevelId?: string | null;
+  hasDisability?: boolean;
 }
 
 interface CreateVisitorResponse {
@@ -19,18 +21,45 @@ export class CreateVisitor {
   constructor(private visitorRepository: VisitorRepository) {}
 
   async execute(request: CreateVisitorRequest): Promise<CreateVisitorResponse> {
-    const { name, document, dateOfBirth, photo, priorityLevelId } = request;
-
-    const visitor = new Visitor(
+    const {
       name,
       document,
       dateOfBirth,
       photo,
       priorityLevelId,
+      hasDisability,
+    } = request;
+
+    const cleanDoc = document.replace(/\D/g, '');
+
+    const existingVisitor =
+      await this.visitorRepository.findByDocument(cleanDoc);
+    if (existingVisitor) {
+      throw new VisitorAlreadyExistsException();
+    }
+
+    let finalPriorityLevelId = priorityLevelId ?? null;
+    const tempVisitor = new Visitor(
+      name,
+      document,
+      dateOfBirth,
+      photo ?? null,
+      finalPriorityLevelId,
+    );
+    if (tempVisitor.isPriority(hasDisability) && !finalPriorityLevelId) {
+      finalPriorityLevelId = '1';
+    }
+
+    const visitor = new Visitor(
+      name,
+      document,
+      dateOfBirth,
+      photo ?? null,
+      finalPriorityLevelId,
     );
 
-    await this.visitorRepository.create(visitor);
+    const createdVisitor = await this.visitorRepository.create(visitor);
 
-    return { visitor };
+    return { visitor: createdVisitor };
   }
 }
