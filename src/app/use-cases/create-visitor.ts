@@ -47,7 +47,9 @@ export class CreateVisitor {
       finalPriorityLevelId,
     );
     if (tempVisitor.isPriority(hasDisability) && !finalPriorityLevelId) {
-      finalPriorityLevelId = '1';
+      finalPriorityLevelId = hasDisability
+        ? 'a2222222-2222-2222-2222-222222222222'
+        : 'a1111111-1111-1111-1111-111111111111';
     }
 
     const visitor = new Visitor(
