@@ -67,28 +67,56 @@ export class PrismaSchedulingRepository implements SchedulingRepository {
     return raw.map((scheduling) => PrismaSchedulingMapper.toDomain(scheduling));
   }
 
-  async countByRoomAndDate(roomId: string, date: Date): Promise<number> {
+  async update(scheduling: Scheduling): Promise<Scheduling> {
+    const raw = PrismaSchedulingMapper.toPrisma(scheduling);
+
+    const updated = await this.prismaService.scheduling.update({
+      where: { id: scheduling.id },
+      data: {
+        dateScheduled: raw.dateScheduled,
+        roomId: raw.roomId,
+        active: raw.active,
+      },
+      include: {
+        visitor: true,
+        room: true,
+      },
+    });
+
+    return PrismaSchedulingMapper.toDomain(updated);
+  }
+
+  async countByRoomAndDate(
+    roomId: string,
+    date: Date,
+    excludeSchedulingId?: string,
+  ): Promise<number> {
     const startOfMinute = new Date(date);
     startOfMinute.setSeconds(0, 0);
 
     const endOfMinute = new Date(date);
     endOfMinute.setSeconds(59, 999);
 
-    return await this.prismaService.scheduling.count({
-      where: {
-        roomId,
-        dateScheduled: {
-          gte: startOfMinute,
-          lte: endOfMinute,
-        },
-        active: true,
+    const where: Prisma.SchedulingWhereInput = {
+      roomId,
+      dateScheduled: {
+        gte: startOfMinute,
+        lte: endOfMinute,
       },
-    });
+      active: true,
+    };
+
+    if (excludeSchedulingId) {
+      where.id = { not: excludeSchedulingId };
+    }
+
+    return await this.prismaService.scheduling.count({ where });
   }
 
   async findVisitorSchedulingAtDate(
     visitorId: string,
     date: Date,
+    excludeSchedulingId?: string,
   ): Promise<Scheduling | null> {
     const startOfMinute = new Date(date);
     startOfMinute.setSeconds(0, 0);
@@ -96,15 +124,21 @@ export class PrismaSchedulingRepository implements SchedulingRepository {
     const endOfMinute = new Date(date);
     endOfMinute.setSeconds(59, 999);
 
-    const raw = await this.prismaService.scheduling.findFirst({
-      where: {
-        visitorId,
-        dateScheduled: {
-          gte: startOfMinute,
-          lte: endOfMinute,
-        },
-        active: true,
+    const where: Prisma.SchedulingWhereInput = {
+      visitorId,
+      dateScheduled: {
+        gte: startOfMinute,
+        lte: endOfMinute,
       },
+      active: true,
+    };
+
+    if (excludeSchedulingId) {
+      where.id = { not: excludeSchedulingId };
+    }
+
+    const raw = await this.prismaService.scheduling.findFirst({
+      where,
       include: {
         visitor: true,
         room: true,
@@ -115,3 +149,4 @@ export class PrismaSchedulingRepository implements SchedulingRepository {
     return PrismaSchedulingMapper.toDomain(raw);
   }
 }
+

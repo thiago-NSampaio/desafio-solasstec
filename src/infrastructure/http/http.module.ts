@@ -11,7 +11,9 @@ import { RoomController } from './controllers/room.controller';
 import { CreateScheduling } from '../../app/use-cases/create-scheduling';
 import { GetScheduling } from '../../app/use-cases/get-scheduling';
 import { GetSchedulings } from '../../app/use-cases/get-schedulings';
+import { UpdateScheduling } from '../../app/use-cases/update-scheduling';
 import { SchedulingController } from './controllers/scheduling.controller';
+
 import { CreateEntry } from '../../app/use-cases/create-entry';
 import { GetEntry } from '../../app/use-cases/get-entry';
 import { EntryController } from './controllers/entry.controller';
@@ -50,6 +52,8 @@ import { DatabaseModule } from '../database/prisma/database.module';
     CreateScheduling,
     GetScheduling,
     GetSchedulings,
+    UpdateScheduling,
+
     CreateEntry,
     GetEntry,
     CreateHoliday,

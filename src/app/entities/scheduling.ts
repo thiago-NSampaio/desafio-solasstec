@@ -5,8 +5,8 @@ import { Visitor } from './visitor';
 export class Scheduling {
   private readonly _id: string;
   private readonly _visitorId: string;
-  private readonly _roomId: string | null;
-  private readonly _dateScheduled: Date;
+  private _roomId: string | null;
+  private _dateScheduled: Date;
   private readonly _active: boolean | null;
   private readonly _createdAt: Date | null;
   private readonly _visitor?: Visitor | null;
@@ -31,6 +31,16 @@ export class Scheduling {
     this._visitor = visitor;
     this._room = room;
   }
+
+  updateDetails(dateScheduled?: Date, roomId?: string | null) {
+    if (dateScheduled !== undefined) {
+      this._dateScheduled = dateScheduled;
+    }
+    if (roomId !== undefined) {
+      this._roomId = roomId;
+    }
+  }
+
 
   get id(): string {
     return this._id;

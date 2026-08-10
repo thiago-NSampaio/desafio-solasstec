@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateScheduling } from '../../../app/use-cases/create-scheduling';
 import { GetScheduling } from '../../../app/use-cases/get-scheduling';
 import { GetSchedulings } from '../../../app/use-cases/get-schedulings';
+import { UpdateScheduling } from '../../../app/use-cases/update-scheduling';
 import { CreateSchedulingBody } from '../dtos/create-scheduling-body';
+import { UpdateSchedulingBody } from '../dtos/update-scheduling-body';
 import { SchedulingPresenter } from '../presenters/scheduling-presenter';
 
 @Controller('/schedulings')
@@ -11,6 +13,7 @@ export class SchedulingController {
     private createScheduling: CreateScheduling,
     private getScheduling: GetScheduling,
     private getSchedulings: GetSchedulings,
+    private updateScheduling: UpdateScheduling,
   ) {}
 
   @Post()
@@ -21,6 +24,24 @@ export class SchedulingController {
       visitorId,
       dateScheduled: new Date(dateScheduled),
       roomId: roomId ?? null,
+    });
+
+    return {
+      scheduling: SchedulingPresenter.toHTTP(scheduling),
+    };
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() body: UpdateSchedulingBody,
+  ) {
+    const { dateScheduled, roomId } = body;
+
+    const { scheduling } = await this.updateScheduling.execute({
+      schedulingId: id,
+      dateScheduled: dateScheduled ? new Date(dateScheduled) : undefined,
+      roomId: roomId !== undefined ? roomId : undefined,
     });
 
     return {
@@ -56,3 +77,4 @@ export class SchedulingController {
     };
   }
 }
+
