@@ -21,6 +21,9 @@ import { HolidayController } from './controllers/holiday.controller';
 import { CreateResponsibleRoom } from '../../app/use-cases/create-responsible-room';
 import { GetRoomResponsibles } from '../../app/use-cases/get-room-responsibles';
 import { ResponsibleRoomController } from './controllers/responsible-room.controller';
+import { GetTypePriority } from '../../app/use-cases/get-type-priority';
+import { GetTypePriorities } from '../../app/use-cases/get-type-priorities';
+import { TypePriorityController } from './controllers/type-priority.controller';
 import { DatabaseModule } from '../database/prisma/database.module';
 
 @Module({
@@ -32,6 +35,7 @@ import { DatabaseModule } from '../database/prisma/database.module';
     SchedulingController,
     EntryController,
     HolidayController,
+    TypePriorityController,
   ],
   providers: [
     CreateVisitor,
@@ -50,6 +54,9 @@ import { DatabaseModule } from '../database/prisma/database.module';
     GetEntry,
     CreateHoliday,
     GetHolidays,
+    GetTypePriority,
+    GetTypePriorities,
   ],
 })
 export class HttpModule {}
+

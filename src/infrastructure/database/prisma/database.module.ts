@@ -12,6 +12,8 @@ import { HolidayRepository } from '../../../app/repositories/holiday-repository'
 import { PrismaHolidayRepository } from './repositories/prisma-holiday-repository';
 import { ResponsibleRoomRepository } from '../../../app/repositories/responsible-room-repository';
 import { PrismaResponsibleRoomRepository } from './repositories/prisma-responsible-room-repository';
+import { TypePriorityRepository } from '../../../app/repositories/type-priority-repository';
+import { PrismaTypePriorityRepository } from './repositories/prisma-type-priority-repository';
 
 @Module({
   providers: [
@@ -40,6 +42,10 @@ import { PrismaResponsibleRoomRepository } from './repositories/prisma-responsib
       provide: ResponsibleRoomRepository,
       useClass: PrismaResponsibleRoomRepository,
     },
+    {
+      provide: TypePriorityRepository,
+      useClass: PrismaTypePriorityRepository,
+    },
   ],
   exports: [
     VisitorRepository,
@@ -48,6 +54,8 @@ import { PrismaResponsibleRoomRepository } from './repositories/prisma-responsib
     EntryRepository,
     HolidayRepository,
     ResponsibleRoomRepository,
+    TypePriorityRepository,
   ],
 })
 export class DatabaseModule {}
+
