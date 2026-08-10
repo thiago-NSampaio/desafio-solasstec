@@ -15,13 +15,14 @@ export class RoomController {
 
   @Post()
   async create(@Body() body: CreateRoomBody) {
-    const { name, availability, capacity, capacityVariation } = body;
+    const { name, availability, capacity, capacityVariation, responsibleName } = body;
 
     const { room } = await this.createRoom.execute({
       name,
       availability,
       capacity,
       capacityVariation: capacityVariation ?? null,
+      responsibleName,
     });
 
     return {

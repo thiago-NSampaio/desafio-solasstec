@@ -10,6 +10,7 @@ export class RoomPresenter {
       capacityVariation: room.capacityVariation ?? null,
       active: room.active,
       createdAt: room.createdAt,
+      responsible: room.responsible ?? null,
     };
   }
 }

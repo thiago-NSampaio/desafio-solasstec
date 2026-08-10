@@ -1,10 +1,11 @@
 import { randomUUID } from 'node:crypto';
 
 export interface Availability {
-  dayOfWeek: string;
+  days: string[];
   openTime: string;
   closeTime: string;
 }
+
 
 export class Room {
   private readonly _id: string;
@@ -14,6 +15,7 @@ export class Room {
   private readonly _capacityVariation: number | null;
   private readonly _active: boolean | null;
   private readonly _createdAt: Date | null;
+  private readonly _responsible: string | null;
 
   constructor(
     name: string,
@@ -23,6 +25,7 @@ export class Room {
     active?: boolean | null,
     createdAt?: Date | null,
     id?: string,
+    responsible?: string | null,
   ) {
     this._id = id ?? randomUUID();
     this._name = name;
@@ -31,6 +34,7 @@ export class Room {
     this._capacityVariation = capacityVariation ?? null;
     this._active = active ?? true;
     this._createdAt = createdAt ?? new Date();
+    this._responsible = responsible ?? null;
   }
 
   get id(): string {
@@ -60,5 +64,10 @@ export class Room {
   get createdAt(): Date | null {
     return this._createdAt;
   }
+
+  get responsible(): string | null {
+    return this._responsible;
+  }
 }
+
 

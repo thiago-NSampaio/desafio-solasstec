@@ -12,7 +12,7 @@ export class CreateRoomBody {
   @IsString({ message: 'O nome da sala deve ser um texto.' })
   name!: string;
 
-  @IsNotEmpty({ message: 'A disponibilidade da sala é obrigatória.' })
+  @IsNotEmpty({ message: 'A disponibilidade é obrigatória.' })
   @IsArray({ message: 'A disponibilidade deve ser uma lista.' })
   availability!: Availability[];
 
@@ -23,4 +23,8 @@ export class CreateRoomBody {
   @IsOptional()
   @IsInt({ message: 'A variação de capacidade deve ser um número inteiro.' })
   capacityVariation?: number;
+
+  @IsOptional()
+  @IsString({ message: 'O nome do responsável deve ser um texto.' })
+  responsibleName?: string;
 }
