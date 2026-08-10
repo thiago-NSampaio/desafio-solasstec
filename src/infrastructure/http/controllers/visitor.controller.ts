@@ -23,7 +23,6 @@ export class VisitorController {
       document,
       photo,
       priorityLevelId,
-      hasDisability,
     } = body;
 
     const { visitor } = await this.createVisitor.execute({
@@ -32,7 +31,6 @@ export class VisitorController {
       dateOfBirth: new Date(dateOfBirth),
       photo: photo ?? '',
       priorityLevelId: priorityLevelId ?? null,
-      hasDisability,
     });
 
     return {

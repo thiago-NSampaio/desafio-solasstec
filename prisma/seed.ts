@@ -15,18 +15,6 @@ export const DEFAULT_TYPE_PRIORITIES = [
     priorityLevel: 2,
     active: true,
   },
-  {
-    id: 'a3333333-3333-3333-3333-333333333333',
-    description: 'Gestante / Lactante',
-    priorityLevel: 3,
-    active: true,
-  },
-  {
-    id: 'a4444444-4444-4444-4444-444444444444',
-    description: 'Geral',
-    priorityLevel: 4,
-    active: true,
-  },
 ];
 
 export async function seedTypePriorities(prisma: PrismaClient) {

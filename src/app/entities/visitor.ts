@@ -70,9 +70,7 @@ export class Visitor {
     return age;
   }
 
-  isPriority(hasDisability?: boolean): boolean {
-    return (
-      this.age >= 60 || Boolean(hasDisability) || Boolean(this._priorityLevelId)
-    );
+  isPriority(): boolean {
+    return this.age >= 60 || Boolean(this._priorityLevelId);
   }
 }

@@ -9,7 +9,6 @@ interface CreateVisitorRequest {
   dateOfBirth: Date;
   photo?: string;
   priorityLevelId?: string | null;
-  hasDisability?: boolean;
 }
 
 interface CreateVisitorResponse {
@@ -18,7 +17,7 @@ interface CreateVisitorResponse {
 
 @Injectable()
 export class CreateVisitor {
-  constructor(private visitorRepository: VisitorRepository) {}
+  constructor(private visitorRepository: VisitorRepository) { }
 
   async execute(request: CreateVisitorRequest): Promise<CreateVisitorResponse> {
     const {
@@ -27,7 +26,6 @@ export class CreateVisitor {
       dateOfBirth,
       photo,
       priorityLevelId,
-      hasDisability,
     } = request;
 
     const cleanDoc = document.replace(/\D/g, '');
@@ -38,26 +36,12 @@ export class CreateVisitor {
       throw new VisitorAlreadyExistsException();
     }
 
-    let finalPriorityLevelId = priorityLevelId ?? null;
-    const tempVisitor = new Visitor(
-      name,
-      document,
-      dateOfBirth,
-      photo ?? null,
-      finalPriorityLevelId,
-    );
-    if (tempVisitor.isPriority(hasDisability) && !finalPriorityLevelId) {
-      finalPriorityLevelId = hasDisability
-        ? 'a2222222-2222-2222-2222-222222222222'
-        : 'a1111111-1111-1111-1111-111111111111';
-    }
-
     const visitor = new Visitor(
       name,
       document,
       dateOfBirth,
       photo ?? null,
-      finalPriorityLevelId,
+      priorityLevelId ?? null,
     );
 
     const createdVisitor = await this.visitorRepository.create(visitor);
