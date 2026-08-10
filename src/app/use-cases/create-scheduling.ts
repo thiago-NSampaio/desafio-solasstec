@@ -56,12 +56,14 @@ export class CreateScheduling {
     const dayIndex = date.getDay();
     const validNames = DAY_MAP[dayIndex] || [];
 
-    const avail = room.availability.find((a) => {
-      const dayName = a.dayOfWeek.toLowerCase().trim();
-      return validNames.some(
-        (vn) => dayName.includes(vn) || vn.includes(dayName),
-      );
-    });
+    const avail = room.availability.find((a) =>
+      a.days.some((d) => {
+        const dayName = d.toLowerCase().trim();
+        return validNames.some(
+          (vn) => dayName.includes(vn) || vn.includes(dayName),
+        );
+      }),
+    );
 
     if (!avail) return false;
 
@@ -74,6 +76,7 @@ export class CreateScheduling {
 
     return dateMinutes >= openMinutes && dateMinutes <= closeMinutes;
   }
+
 
   private async suggestNextAvailableDate(
     visitorId: string,
