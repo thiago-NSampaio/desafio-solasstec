@@ -1,6 +1,9 @@
 import { IsDateString, IsOptional, IsString } from 'class-validator';
 
 export class UpdateSchedulingBody {
+  @IsString({ message: 'O ID do visitante deve ser um texto.' })
+  visitorId?: string;
+
   @IsOptional()
   @IsDateString({}, { message: 'A data agendada deve ser uma data válida.' })
   dateScheduled?: string;

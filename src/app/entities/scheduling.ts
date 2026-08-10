@@ -4,7 +4,7 @@ import { Visitor } from './visitor';
 
 export class Scheduling {
   private readonly _id: string;
-  private readonly _visitorId: string;
+  private _visitorId: string;
   private _roomId: string | null;
   private _dateScheduled: Date;
   private readonly _active: boolean | null;
@@ -32,15 +32,21 @@ export class Scheduling {
     this._room = room;
   }
 
-  updateDetails(dateScheduled?: Date, roomId?: string | null) {
+  updateDetails(
+    dateScheduled?: Date,
+    roomId?: string | null,
+    visitorId?: string,
+  ) {
     if (dateScheduled !== undefined) {
       this._dateScheduled = dateScheduled;
     }
     if (roomId !== undefined) {
       this._roomId = roomId;
     }
+    if (visitorId !== undefined) {
+      this._visitorId = visitorId;
+    }
   }
-
 
   get id(): string {
     return this._id;
@@ -52,6 +58,16 @@ export class Scheduling {
 
   get roomId(): string | null {
     return this._roomId;
+  }
+
+  get endTime(): Date | null {
+    if (!this._dateScheduled || !this._room || !this._room.availability?.length) {
+      return null;
+    }
+
+    const endTime = new Date(this._dateScheduled);
+
+    return endTime;
   }
 
   get dateScheduled(): Date {

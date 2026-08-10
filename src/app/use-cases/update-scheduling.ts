@@ -9,6 +9,7 @@ import { InvalidSchedulingException } from './create-scheduling';
 
 interface UpdateSchedulingRequest {
   schedulingId: string;
+  visitorId?: string;
   dateScheduled?: Date;
   roomId?: string | null;
 }
@@ -116,14 +117,14 @@ export class UpdateScheduling {
   async execute(
     request: UpdateSchedulingRequest,
   ): Promise<UpdateSchedulingResponse> {
-    const { schedulingId, dateScheduled, roomId } = request;
+    const { schedulingId, visitorId: newVisitorId, dateScheduled, roomId } = request;
 
     const scheduling = await this.schedulingRepository.findById(schedulingId);
     if (!scheduling) {
       throw new InvalidSchedulingException('Agendamento não encontrado.');
     }
 
-    const visitorId = scheduling.visitorId;
+    const visitorId = newVisitorId ?? scheduling.visitorId;
     const targetDateScheduled = dateScheduled ?? scheduling.dateScheduled;
     const targetRoomId = roomId !== undefined ? roomId : scheduling.roomId;
 
@@ -222,7 +223,7 @@ export class UpdateScheduling {
       }
     }
 
-    scheduling.updateDetails(targetDateScheduled, targetRoomId);
+    scheduling.updateDetails(targetDateScheduled, targetRoomId, visitorId);
     const updatedScheduling = await this.schedulingRepository.update(scheduling);
 
     return { scheduling: updatedScheduling };

@@ -36,10 +36,11 @@ export class SchedulingController {
     @Param('id') id: string,
     @Body() body: UpdateSchedulingBody,
   ) {
-    const { dateScheduled, roomId } = body;
+    const { visitorId, dateScheduled, roomId } = body;
 
     const { scheduling } = await this.updateScheduling.execute({
       schedulingId: id,
+      visitorId: visitorId !== undefined ? visitorId : undefined,
       dateScheduled: dateScheduled ? new Date(dateScheduled) : undefined,
       roomId: roomId !== undefined ? roomId : undefined,
     });

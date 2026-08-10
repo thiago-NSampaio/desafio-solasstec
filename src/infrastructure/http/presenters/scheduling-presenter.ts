@@ -7,6 +7,7 @@ export class SchedulingPresenter {
       visitorId: scheduling.visitorId,
       roomId: scheduling.roomId,
       dateScheduled: scheduling.dateScheduled,
+      endTime: scheduling.endTime,
       active: scheduling.active,
       createdAt: scheduling.createdAt,
       visitor: scheduling.visitor
